@@ -1,4 +1,4 @@
-import MyAsideFilter from "./MyFilter";
+import MyAsideFilter from "./MyAsideFilter";
 import MyResults from "./MyResults";
 
 export default function MyOnlineShopApp() {

@@ -1,33 +1,33 @@
-export default function MySelector() {
-  const selectOptions = [
-    {id: 1, value: 'all', isDefaultValue: true, innerHTML: 'Все'},
-    {id: 2, value: 'estate', isDefaultValue: false, innerHTML: 'Недвижимость'},
-    {id: 3, value: 'laptops', isDefaultValue: false, innerHTML: 'Ноутбуки'},
-    {id: 4, value: 'camera', isDefaultValue: false, innerHTML: 'Фотоаппараты'},
-    {id: 5, value: 'cars', isDefaultValue: false, innerHTML: 'Автомобили'},
-  ]
+export default function MySelector({
+  setQueue = console.log,
+  className,
+  id,
+  oprtionArr,
+  labelName,
+}) {
+
   let defaultValueOption;
 
-  const optionList = selectOptions.map(({
-    id, 
+  const optionList = oprtionArr.map(({
     value, 
     isDefaultValue, 
     innerHTML,
   }) => {
     if (isDefaultValue) defaultValueOption = value;
     return <option 
-      key={id} 
+      key={value} 
       value={value}
     >{innerHTML}</option>
   })
 
   return (
-    <div className="filter__select-wrapper">
-      <label htmlFor="categories">Категория товаров</label>
+    <div className={className}>
+      <label htmlFor={id}>{labelName}</label>
       <select 
-        id="categories" 
-        name="categories" 
+        id={id} 
+        name={id} 
         defaultValue={defaultValueOption}
+        onChange={(e) => setQueue(e.target.value)}
       >
         {optionList}
       </select>
