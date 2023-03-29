@@ -7,6 +7,11 @@
 
 # testing
 /coverage
+/user-sources_16-46-54
+/src/css
+/src/fonts
+/src/img
+/src/js
 
 # production
 /build
