@@ -1,11 +1,10 @@
 import './App.css';
+import MyOnlineShopApp from './components/MyOnlineShopApp';
 
-function App() {
+export default function App() {
   return (
-    <>
-      In App..
-    </>
+    <main>
+      <MyOnlineShopApp/>
+    </main>
   );
 }
-
-export default App;
