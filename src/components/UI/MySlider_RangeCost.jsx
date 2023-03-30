@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReactSlider from 'react-slider';
 import { numberFormat } from '../Utilities/numberFormat.js'
 
-export default function MyCostRange() {
+export default function MySlider_RangeCost() {
   const min = 10000
   const max = 30000000
 
@@ -13,8 +13,6 @@ export default function MyCostRange() {
     setMinThumb(e[0])
     setMaxThumb(e[1])
   }
-
-  console.log('render')
 
   return (
     <>

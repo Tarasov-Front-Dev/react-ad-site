@@ -1,5 +1,5 @@
-import MapMyInputs from "./MapMyInputs"
-import MySelector from "./MySelector"
+import MapMyInputs from "../UI/MapMyInputs"
+import MySelector from "../UI/MySelector"
 
 export default function MyCameraFilter() {
 

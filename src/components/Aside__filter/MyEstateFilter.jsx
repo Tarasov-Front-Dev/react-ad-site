@@ -1,4 +1,4 @@
-import MapMyInputs from "./MapMyInputs"
+import MapMyInputs from "../UI/MapMyInputs"
 
 export default function MyEstateFilter() {
 

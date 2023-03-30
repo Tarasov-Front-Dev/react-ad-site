@@ -1,7 +1,6 @@
-import MyCameraFilter from "./UI/MyCameraFilter";
-import MyCarFilter from "./UI/MyCarFilter";
-import MyEstateFilter from "./UI/MyEstateFilter";
-import MyLaptopFilter from "./UI/MyLaptopFilter";
+import MyEstateFilter from "./MyEstateFilter";
+import MyLaptopFilter from "./MyLaptopFilter";import MyCameraFilter from "./MyCameraFilter";
+import MyCarFilter from "./MyCarFilter";
 
 
 export default function ProductTypeSection({queue}) {

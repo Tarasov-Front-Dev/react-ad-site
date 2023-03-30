@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ProductTypeSection from "./ProductTypeSection";
-import MyCostRange from "./UI/MyCostRange";
+import ProductTypeSection from "./Aside__filter/ProductTypeSection";
+import MySlider_RangeCost from "./UI/MySlider_RangeCost";
 import MySelector from "./UI/MySelector";
 
 export default function MyAsideFilter() {
@@ -17,7 +17,7 @@ export default function MyAsideFilter() {
           id='categories'
           oprtionArr={selectOptions}
         />
-        <MyCostRange/>
+        <MySlider_RangeCost/>
         <ProductTypeSection queue={queue}/>
       </form>
     </section>

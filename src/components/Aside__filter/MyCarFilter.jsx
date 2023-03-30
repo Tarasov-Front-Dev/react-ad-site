@@ -1,11 +1,11 @@
-import MapMyInputs from "./MapMyInputs"
-import MySelector from "./MySelector"
+import MapMyInputs from "../UI/MapMyInputs"
+import MySelector from "../UI/MySelector"
 
 export default function MyCarFilter() {
   return (
     <div className="filter__car">
       <fieldset className="filter__type filter__type--car-body">
-        <legend>Тип кузова</legend>
+        <legend>Тип кузова автомобиля</legend>
         <ul className="filter__checkboxes-list filter__checkboxes-list--car-body">
           <MapMyInputs
             arr={carBodyFilter}
