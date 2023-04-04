@@ -13,16 +13,16 @@ export default function ProductTypeSection({queue}) {
 
 const filterSection = (queue) => {
   switch (queue) {
-    case 'estate':
+    case 'Недвижимость':
       return <MyEstateFilter/>
       break;
-    case 'laptops':
+    case 'Ноутбук':
       return <MyLaptopFilter/>
       break;
-    case 'camera':
+    case 'Фотоаппарат':
       return <MyCameraFilter/>
       break;
-    case 'cars':
+    case 'Автомобиль':
       return <MyCarFilter/>
 
     default:

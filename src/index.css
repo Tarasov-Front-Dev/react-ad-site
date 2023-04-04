@@ -19,3 +19,10 @@
 @import "./css/blocks/gallery.css";
 @import "./css/blocks/chars.css";
 @import "./css/blocks/seller.css";
+
+.scroll-container {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(0 0% 50%);
+  /* postcss-scrollbar will add the -webkit version automatically! */
+}

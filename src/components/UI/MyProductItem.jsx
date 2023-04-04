@@ -32,10 +32,6 @@ export default function MyProductItem({product}) {
         <img
           src={product.photos[0]}
           srcSet=".img/item1-2x.jpg 2x"
-          width={318}
-          height={'100%'}
-          object-fit={'cover'}
-          object-position={'50% 50%'}
           alt={product.name}
         />
         <div className="product__image-navigation">

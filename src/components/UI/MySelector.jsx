@@ -1,10 +1,14 @@
+import { useDispatch } from "react-redux";
+
 export default function MySelector({
-  setQueue = console.log,
+  setQueue,
   className,
   id,
   oprtionArr,
   labelName,
 }) {
+  
+  const dispatch = useDispatch()
 
   let defaultValueOption;
 
@@ -20,6 +24,11 @@ export default function MySelector({
     >{innerHTML}</option>
   })
 
+  const changeHandler = (e) => {
+    setQueue(e.target.value)
+    dispatch({type: e.target.value})
+  }
+
   return (
     <div className={className}>
       <label htmlFor={id}>{labelName}</label>
@@ -27,7 +36,7 @@ export default function MySelector({
         id={id} 
         name={id} 
         defaultValue={defaultValueOption}
-        onChange={(e) => setQueue(e.target.value)}
+        onChange={changeHandler}
       >
         {optionList}
       </select>

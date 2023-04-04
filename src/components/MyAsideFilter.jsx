@@ -25,9 +25,9 @@ export default function MyAsideFilter() {
 }
 
 const selectOptions = [
-  {value: 'all', isDefaultValue: true, innerHTML: 'Все'},
-  {value: 'estate', isDefaultValue: false, innerHTML: 'Недвижимость'},
-  {value: 'laptops', isDefaultValue: false, innerHTML: 'Ноутбуки'},
-  {value: 'camera', isDefaultValue: false, innerHTML: 'Фотоаппараты'},
-  {value: 'cars', isDefaultValue: false, innerHTML: 'Автомобили'},
+  {value: 'Все', isDefaultValue: true, innerHTML: 'Все'},
+  {value: 'Недвижимость', isDefaultValue: false, innerHTML: 'Недвижимость'},
+  {value: 'Ноутбук', isDefaultValue: false, innerHTML: 'Ноутбуки'},
+  {value: 'Фотоаппарат', isDefaultValue: false, innerHTML: 'Фотоаппараты'},
+  {value: 'Автомобиль', isDefaultValue: false, innerHTML: 'Автомобили'},
 ]
