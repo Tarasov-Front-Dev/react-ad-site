@@ -2,7 +2,6 @@ import { numberFormat } from '../Utilities/numberFormat.js'
 import { getPublishDateDifference } from '../Utilities/dateFormat.js'
 
 export default function MyProductItem({product}) {
-
   return (
   <li className="results__item product">
       {/* <button
@@ -31,8 +30,10 @@ export default function MyProductItem({product}) {
         <div className="product__image-more-photo hidden">+2 фото</div>
         <img
           src={product.photos[0]}
-          srcSet=".img/item1-2x.jpg 2x"
+          srcSet={product.photos[0]}
           alt={product.name}
+          width={318}
+          height={218}
         />
         <div className="product__image-navigation">
           <span className="product__navigation-item product__navigation-item--active" />

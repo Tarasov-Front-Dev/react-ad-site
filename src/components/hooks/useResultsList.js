@@ -38,16 +38,33 @@ const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX) => {
   return sortByMinMax
 }
 
+const useSortesResults = (arr, value) => {
+  switch (value) {
+    case 'popular': {
+      return arr.sort(() => Math.floor(Math.random() * 2 - 1).toString())
+    }
+    case 'cheap': {
+      return arr.sort((a, b) => a.price - b.price)
+    }
+    case 'new': {
+      return arr.sort((a, b) => b['publish-date'] - a['publish-date'])
+    }
+  }
+}
+
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
 export const useResultsList = (
   resultsList, 
   {productType}, 
-  {rangeMIN, rangeMAX}, 
-  dispatch
+  {rangeMIN, rangeMAX},
+  {sort},
+  dispatch,
   ) => {
   const typeSortedResults = useTypeSortedResults(resultsList, productType, dispatch)
   const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
+
+  const sortedResult = useSortesResults(minMaxSortedResuls, sort)
 
   return minMaxSortedResuls
 }

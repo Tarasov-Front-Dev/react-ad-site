@@ -25,13 +25,6 @@ const filterSection = (queue) => {
     default:
       return(
         <>
-          <MyEstateFilter/>
-          <hr></hr>
-          <MyLaptopFilter/>
-          <hr></hr>
-          <MyCameraFilter/>
-          <hr></hr>
-          <MyCarFilter/>
         </>
       )
   }

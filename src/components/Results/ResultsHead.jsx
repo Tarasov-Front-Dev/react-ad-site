@@ -1,11 +1,13 @@
+import { useDispatch } from "react-redux"
 import MapMyInputs from "../UI/MapMyInputs"
 
 export default function ResultsHead() {
+  const dispatch = useDispatch()
   return (
     <div className="results__head">
       <h2 className="title results__title">Результаты</h2>
       <div className="results__sorting sorting">
-        <form className="sorting__form">
+        <form className="sorting__form" onChange={(e) => dispatch({type: e.target.value})}>
           <fieldset className="sorting__order">
             <legend>Показать сначала:</legend>
             <ul className="sorting__order-list">
