@@ -40,8 +40,12 @@ const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX) => {
 
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
-export const useResultsList = (resultsList, {productType}, {rangeMIN, rangeMAX}, dispatch) => {
-  console.log(productType, rangeMIN, rangeMAX)
+export const useResultsList = (
+  resultsList, 
+  {productType}, 
+  {rangeMIN, rangeMAX}, 
+  dispatch
+  ) => {
   const typeSortedResults = useTypeSortedResults(resultsList, productType, dispatch)
   const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
 
