@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-ad-site/static/css/main.a17d128e.css",
+    "main.css": "/react-ad-site/static/css/main.129ef893.css",
     "main.js": "/react-ad-site/static/js/main.cae059a0.js",
     "static/media/Montserrat-Regular.woff": "/react-ad-site/static/media/Montserrat-Regular.6ae2be56f2279197e0cb.woff",
     "static/media/Montserrat-Medium.woff": "/react-ad-site/static/media/Montserrat-Medium.08fd1bdf818098e232e3.woff",
@@ -14,11 +14,11 @@
     "index.html": "/react-ad-site/index.html",
     "static/media/icon-tick_disabled.svg": "/react-ad-site/static/media/icon-tick_disabled.d0d0a5ae64afaf6bae42.svg",
     "static/media/icon-tick.svg": "/react-ad-site/static/media/icon-tick.de26e26e8f6405729981.svg",
-    "main.a17d128e.css.map": "/react-ad-site/static/css/main.a17d128e.css.map",
+    "main.129ef893.css.map": "/react-ad-site/static/css/main.129ef893.css.map",
     "main.cae059a0.js.map": "/react-ad-site/static/js/main.cae059a0.js.map"
   },
   "entrypoints": [
-    "static/css/main.a17d128e.css",
+    "static/css/main.129ef893.css",
     "static/js/main.cae059a0.js"
   ]
 }
