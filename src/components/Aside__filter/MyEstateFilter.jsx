@@ -1,6 +1,8 @@
-import MapMyInputs from "../UI/MapMyInputs"
+import { useDispatch } from "react-redux";
+import MapMyInputs from "../UI/MapMyInputs";
 
 export default function MyEstateFilter() {
+  const estateDispatch = useDispatch()
 
   return (
     <div className="filter__estate">
@@ -31,9 +33,10 @@ export default function MyEstateFilter() {
         <input
           type="number"
           id="square"
-          name="min-square"
+          name="square"
           defaultValue=""
           placeholder={0}
+          onChange={(e) => estateDispatch({type: "square", payload: e.target.value})}
         />
       </div>
     </div>
@@ -49,9 +52,9 @@ const estateTypeFilter = [
 
 const estateRoomsFilter = [
   {value: "any", id: "any_room", innerHTML: 'Любое', type: 'radio', name: 'rooms'},
-  {value: "one", id: "one", innerHTML: '1', type: 'radio', name: 'rooms'},
-  {value: "two", id: "two", innerHTML: '2', type: 'radio', name: 'rooms'},
-  {value: "three", id: "three", innerHTML: '3', type: 'radio', name: 'rooms'},
-  {value: "four", id: "four", innerHTML: '4', type: 'radio', name: 'rooms'},
-  {value: "fivemore", id: "fivemore", innerHTML: '5+', type: 'radio', name: 'rooms'},
+  {value: 1, id: "one", innerHTML: '1', type: 'radio', name: 'rooms'},
+  {value: 2, id: "two", innerHTML: '2', type: 'radio', name: 'rooms'},
+  {value: 3, id: "three", innerHTML: '3', type: 'radio', name: 'rooms'},
+  {value: 4, id: "four", innerHTML: '4', type: 'radio', name: 'rooms'},
+  {value: 5, id: "fivemore", innerHTML: '5+', type: 'radio', name: 'rooms'},
 ]

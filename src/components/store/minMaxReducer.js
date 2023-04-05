@@ -16,7 +16,7 @@ export const minMaxReducer = (state = defaultState, action) => {
     case 'rangeMAX':
       return {...state, rangeMAX: action.payload}
     default: {
-      return {...state}
+      return state
     }
   }
 }

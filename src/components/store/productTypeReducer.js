@@ -1,22 +1,20 @@
 const defaultState = {
-  productType: 'Все',
+  categories: 'Все',
 }
 
 export const productTypeReducer = (state = defaultState, action) => {
-  switch (action.type) {
+  switch (action.payload) {
     case 'Недвижимость':
-      return {...state, productType: 'Недвижимость'}
+      return {...state, categories: 'Недвижимость'}
     case 'Ноутбук':
-      return {...state, productType: 'Ноутбук'}
+      return {...state, categories: 'Ноутбук'}
     case 'Фотоаппарат':
-      return {...state, productType: 'Фотоаппарат'}
+      return {...state, categories: 'Фотоаппарат'}
     case 'Автомобиль':
-      return {...state, productType: 'Автомобиль'}
+      return {...state, categories: 'Автомобиль'}
     case 'Все':
-      return {...state, productType: 'Все'}
+      return {...state, categories: 'Все'}
     default:
-      return {
-        ...state,
-      }
+      return state
   }
 }

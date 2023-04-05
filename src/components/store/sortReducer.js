@@ -14,7 +14,7 @@ export const sortReducer = (state = defaultState, action) => {
       return {...state, sort: 'new'}
     }
     default: {
-      return {...state}
+      return state
     }
   }
 }

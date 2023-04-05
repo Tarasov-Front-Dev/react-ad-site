@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux"
+
 export default function MyInput({
   id,
   type,
@@ -6,6 +8,8 @@ export default function MyInput({
   innerHTML,
   name,
 }) {
+  const estateDispatch = useDispatch()
+
   return (
     <>
       <input
@@ -14,6 +18,7 @@ export default function MyInput({
         className={className}
         name={name}
         value={value}
+        // onChange={() => estateDispatch({type: {name}, payload: {value}})}
       />
       <label htmlFor={id}>{innerHTML}</label>
     </>

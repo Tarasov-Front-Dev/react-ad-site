@@ -7,9 +7,18 @@ import axios from "axios";
 export default function ResultsList() {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
+  console.log(state.estate)
+  // console.log(state.estate.type, state.estate.rooms, state.estate.square)
   const [resultsList, setResultsList] = useState([]) // Стейтим полученный от ДБ массив объявлений. Потом будем по нему фильтроваться. В реальной ситуации неплохо бы получать от бэка готовый массив объявления по массиву значений (особенно удачно если запрос будем посылать по сабмиту формы с фильтрами) или хотя бы статичный крупно фильтрованный для последющей мелкой фильтрации на фронте
   
-  const filteredResultsList = useResultsList(resultsList, state.type, state.minMax, state.sort, dispatch) // Здесь мы собираем наш массив объявлений
+  const filteredResultsList = useResultsList(
+    dispatch,
+    resultsList, 
+    state.type, 
+    state.minMax, 
+    state.sort,
+    state.estate,
+    ) // Здесь мы собираем наш массив объявлений
 
   async function getItemList() {
     const response = await axios('https://mock.pages.academy/store/db')

@@ -1,23 +1,23 @@
 import { useMemo } from "react";
 import { getMinMax } from "../Utilities/getMinMax";
 
-const useTypeSortedResults = (resultsList, productType, dispatch) => {
+const useTypeSortedResults = (resultsList, categories, dispatch) => {
   const sortByType = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чиху
     if (!resultsList.length) return [] // При первичном рендере (до момента получения массива объявлений от ДБ) возвращает пустой массив объявлений
 
-    if (productType === 'Все') { // Если показывается весь массив объявлений (дефолтное состояние), то развернуть дефолтный массив в новый и вернуть его. Задать мин/макс значения слайдера и его ползунков
+    if (categories === 'Все') { // Если показывается весь массив объявлений (дефолтное состояние), то развернуть дефолтный массив в новый и вернуть его. Задать мин/макс значения слайдера и его ползунков
       getMinMax(resultsList, dispatch)
       return [...resultsList] // Разорачиваем массив чтобы получить немемоизированное значение от функции useMinMaxSorterResults
     }
 
     // Отфильтровать массив объявлений по типу, задать мин/макс слайдера и его ползунков
     const filteredResultsList = [...resultsList
-      .filter(el => productType === el.category)]
+      .filter(el => categories === el.category)]
 
     getMinMax(filteredResultsList, dispatch)
     return filteredResultsList
 
-  }, [resultsList, productType])
+  }, [resultsList, categories])
 
   return sortByType
 }
@@ -52,19 +52,48 @@ const useSortesResults = (arr, value) => {
   }
 }
 
+const getEstateSorted = (arr, type, rooms, square) => {
+  let resultArr = arr
+    if (type.length) resultArr = type
+      .reduce((acc, el) => acc = [...acc, ...resultArr
+      .filter(i => i.filters.type === el)], [])
+
+    if (Number(rooms)) resultArr = resultArr.filter(i => i.filters['rooms-count'] === rooms)
+
+    if (square) resultArr = resultArr.filter(i => i.filters.area >= square)
+    
+  return resultArr
+}
+
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
 export const useResultsList = (
+  dispatch,
   resultsList, 
-  {productType}, 
+  {categories}, 
   {rangeMIN, rangeMAX},
   {sort},
-  dispatch,
+  {type, rooms, square},
   ) => {
-  const typeSortedResults = useTypeSortedResults(resultsList, productType, dispatch)
-  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
+  let typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
 
-  const sortedResult = useSortesResults(minMaxSortedResuls, sort)
+  if (categories === 'Недвижимость') {
+    typeSortedResults = getEstateSorted(typeSortedResults, type, rooms, square)
+  }
+
+  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
+  useSortesResults(minMaxSortedResuls, sort)
 
   return minMaxSortedResuls
 }
+//   const typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
+//   const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
+//   useSortesResults(minMaxSortedResuls, sort)
+
+//   if (categories === 'Недвижимость') {
+//     const estateSorted = getEstateSorted(minMaxSortedResuls, type, rooms, square)
+//     return estateSorted
+//   }
+
+//   return minMaxSortedResuls
+// }

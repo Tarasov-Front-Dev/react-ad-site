@@ -19,4 +19,7 @@ export const getMinMax = (arr, dispatch) => {
   dispatch({type: 'MAX', payload: MAX})
   dispatch({type: 'rangeMIN', payload: MIN})
   dispatch({type: 'rangeMAX', payload: MAX})
+  dispatch({type: 'estate-type', payload: ''})
+  dispatch({type: 'rooms', payload: 'any'})
+  dispatch({type: 'square', payload: ''})
 }
