@@ -1,6 +1,6 @@
 import MapMyInputs from "../UI/MapMyInputs"
 
-export default function Results__head() {
+export default function ResultsHead() {
   return (
     <div className="results__head">
       <h2 className="title results__title">Результаты</h2>

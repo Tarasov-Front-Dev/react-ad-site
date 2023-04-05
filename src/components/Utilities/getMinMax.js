@@ -1,9 +1,9 @@
-export const rangeMinMax = (results, method) => {
+export const rangeMinMax = (arr, method) => {
   // console.log(Math[method](...results.map(el => el.price)))
 
   const result = Number.isFinite(
-    Math[method](...results.map(el => el.price))) && 
-    Math[method](...results.map(el => el.price))
+    Math[method](...arr.map(el => el.price))) && 
+    Math[method](...arr.map(el => el.price))
 
     // console.log(method.toUpperCase() + ': ' + result)
   

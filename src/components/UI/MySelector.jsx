@@ -24,7 +24,7 @@ export default function MySelector({
     >{innerHTML}</option>
   })
 
-  const changeHandler = (e) => {
+  const onChange = (e) => {
     setQueue(e.target.value)
     dispatch({type: e.target.value})
   }
@@ -36,7 +36,7 @@ export default function MySelector({
         id={id} 
         name={id} 
         defaultValue={defaultValueOption}
-        onChange={changeHandler}
+        onChange={onChange}
       >
         {optionList}
       </select>

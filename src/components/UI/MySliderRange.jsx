@@ -3,12 +3,12 @@ import ReactSlider from 'react-slider';
 import { numberFormat } from '../Utilities/numberFormat.js'
 import { useDispatch, useSelector } from "react-redux";
 
-export default function MySlider_RangeCost() {
+export default function MySliderRange() {
   const dispatch = useDispatch()
-  const MIN = useSelector(state => state.MIN)
-  const MAX = useSelector(state => state.MAX)
-  const rangeMIN = useSelector(state => state.rangeMIN)
-  const rangeMAX = useSelector(state => state.rangeMAX)
+  const MIN = useSelector(state => state.minMax.MIN)
+  const MAX = useSelector(state => state.minMax.MAX)
+  const rangeMIN = useSelector(state => state.minMax.rangeMIN)
+  const rangeMAX = useSelector(state => state.minMax.rangeMAX)
 
   const [minMaxThumb, setMinMaxThumb] = useState([MIN, MAX])
 

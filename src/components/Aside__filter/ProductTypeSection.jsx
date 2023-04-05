@@ -15,13 +15,10 @@ const filterSection = (queue) => {
   switch (queue) {
     case 'Недвижимость':
       return <MyEstateFilter/>
-      break;
     case 'Ноутбук':
       return <MyLaptopFilter/>
-      break;
     case 'Фотоаппарат':
       return <MyCameraFilter/>
-      break;
     case 'Автомобиль':
       return <MyCarFilter/>
 
@@ -37,6 +34,5 @@ const filterSection = (queue) => {
           <MyCarFilter/>
         </>
       )
-      break;
   }
 }

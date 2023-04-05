@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { getMinMax } from "../Utilities/rangeMinMax";
+import { getMinMax } from "../Utilities/getMinMax";
 
 const useTypeSortedResults = (resultsList, productType, dispatch) => {
   const sortByType = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чиху
@@ -22,7 +22,7 @@ const useTypeSortedResults = (resultsList, productType, dispatch) => {
   return sortByType
 }
 
-const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX, dispatch) => {
+const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX) => {
   const sortByMinMax = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чекбоксу
 
     // в случае непредвиденных значений вернуть массив без фильтрации. Можно выдавать ошибку и просить пользователя перезагрузить приложение
@@ -40,9 +40,10 @@ const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX, dispatch) => {
 
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
-export const useResultsList = (resultsList, {productType, rangeMIN, rangeMAX, MIN, MAX}, dispatch) => {
+export const useResultsList = (resultsList, {productType}, {rangeMIN, rangeMAX}, dispatch) => {
+  console.log(productType, rangeMIN, rangeMAX)
   const typeSortedResults = useTypeSortedResults(resultsList, productType, dispatch)
-  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX, dispatch)
+  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
 
   return minMaxSortedResuls
 }
