@@ -1,27 +1,48 @@
 import { useMemo } from "react";
+import { getMinMax } from "../Utilities/rangeMinMax";
 
-const useTypeSortedResults = (resultsList, productType) => {
-  const sortByType = useMemo(() => {
-    if (productType === 'Все') return resultsList
-    return [...resultsList.filter(el => productType === el.category)]
+const useTypeSortedResults = (resultsList, productType, dispatch) => {
+  const sortByType = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чиху
+    if (!resultsList.length) return [] // При первичном рендере (до момента получения массива объявлений от ДБ) возвращает пустой массив объявлений
+
+    if (productType === 'Все') { // Если показывается весь массив объявлений (дефолтное состояние), то развернуть дефолтный массив в новый и вернуть его. Задать мин/макс значения слайдера и его ползунков
+      getMinMax(resultsList, dispatch)
+      return [...resultsList] // Разорачиваем массив чтобы получить немемоизированное значение от функции useMinMaxSorterResults
+    }
+
+    // Отфильтровать массив объявлений по типу, задать мин/макс слайдера и его ползунков
+    const filteredResultsList = [...resultsList
+      .filter(el => productType === el.category)]
+
+    getMinMax(filteredResultsList, dispatch)
+    return filteredResultsList
+
   }, [resultsList, productType])
 
   return sortByType
 }
 
-const useMinMaxSorterResults = (resultsList, min, max) => {
-  const sortByMinMax = useMemo(() => {
-    if (min < 0 || max < 0 || Number.isNaN(+min) || Number.isNaN(+max)) return
-    return [...resultsList
-      .filter(el => el.price >= min && el.price <= max)]
-  }, [resultsList, min, max])
+const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX, dispatch) => {
+  const sortByMinMax = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чекбоксу
+
+    // в случае непредвиденных значений вернуть массив без фильтрации. Можно выдавать ошибку и просить пользователя перезагрузить приложение
+    if (rangeMIN < 0 || rangeMAX < 0 || Number.isNaN(+rangeMIN) || Number.isNaN(+rangeMAX)) return
+
+    // отфильтровать массив объявления по предельным значениям стоимости
+    const filteredResultsList = [...resultsList
+      .filter(el => el.price >= rangeMIN && el.price <= rangeMAX)]
+    
+    return filteredResultsList
+  }, [resultsList, rangeMIN, rangeMAX])
 
   return sortByMinMax
 }
 
-export const useResultsList = (resultsList, {productType, min, max}) => {
-  const typeSortedResults = useTypeSortedResults(resultsList, productType)
-  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, min, max)
+
+// ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
+export const useResultsList = (resultsList, {productType, rangeMIN, rangeMAX, MIN, MAX}, dispatch) => {
+  const typeSortedResults = useTypeSortedResults(resultsList, productType, dispatch)
+  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX, dispatch)
 
   return minMaxSortedResuls
 }

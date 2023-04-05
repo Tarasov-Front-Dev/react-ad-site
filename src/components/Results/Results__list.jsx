@@ -7,28 +7,10 @@ let count = 0;
 
 export default function Results__list() {
   const dispatch = useDispatch()
-  const productType = useSelector(state => state.productType)
-  const min = useSelector(state => state.min)
-  const max = useSelector(state => state.max)
-  const [resultsList, setResultsList] = useState([])
-  const filteredResultsList = useResultsList(resultsList, {productType, min, max})
+  const state = useSelector(state => state)
+  const [resultsList, setResultsList] = useState([]) // Стейтим полученный от ДБ массив объявлений. Потом будем по нему фильтроваться. В реальной ситуации неплохо бы получать от бэка готовый массив объявления по массиву значений (особенно удачно если запрос будем посылать по сабмиту формы с фильтрами) или хотя бы статичный крупно фильтрованный для последющей мелкой фильтрации на фронте
 
-  const rangeMIN = Number.isFinite(
-    Math.min(...filteredResultsList.map(el => el.price))) && 
-    Math.min(...filteredResultsList.map(el => el.price)) || 
-    min
-  console.log(rangeMIN)
-
-  const rangeMAX = Number.isFinite(
-    Math.max(...filteredResultsList.map(el => el.price))) && 
-    Math.max(...filteredResultsList.map(el => el.price)) || 
-    max
-  console.log(rangeMAX)
-
-  // useEffect(() => {
-  //   dispatch({type: 'rangeMIN', payload: rangeMIN})
-  //   dispatch({type: 'rangeMAX', payload: rangeMAX})
-  // }, [filteredResultsList])
+  const filteredResultsList = useResultsList(resultsList, state, dispatch) // Здесь мы собираем наш массив объявлений
 
   async function getItemList() {
     const response = await fetch('https://mock.pages.academy/store/db')
@@ -44,7 +26,7 @@ export default function Results__list() {
 
   return (
     <ul className="results__list">
-      {!filteredResultsList ? 
+      {!filteredResultsList.length ? 
         <h1>Loading...</h1> :
         filteredResultsList.map(el => {
           return <MyProductItem key={el['publish-date']}  product={el}/>

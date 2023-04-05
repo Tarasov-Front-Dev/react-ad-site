@@ -5,26 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function MySlider_RangeCost() {
   const dispatch = useDispatch()
+  const MIN = useSelector(state => state.MIN)
+  const MAX = useSelector(state => state.MAX)
   const rangeMIN = useSelector(state => state.rangeMIN)
   const rangeMAX = useSelector(state => state.rangeMAX)
-  console.log(rangeMIN)
-  console.log(rangeMAX)
 
-  const min = 0
-  const max = 30000000
+  const [minMaxThumb, setMinMaxThumb] = useState([MIN, MAX])
 
-  const [minThumb, setMinThumb] = useState(min)
-  const [maxThumb, setMaxThumb] = useState(max)
+  useEffect(() => {
+    setMinMaxThumb([rangeMIN, rangeMAX])
+  }, [MIN, MAX, rangeMIN, rangeMAX])
 
-  const sliderChange = (e) => {
-    setMinThumb(() => {
-      dispatch({type: 'MIN', payload: e[0]})
-      return e[0]
-    })
-    setMaxThumb(() => {
-      dispatch({type: 'MAX', payload: e[1]})
-      return e[1]
-    })
+  const onChange = (e) => {
+    setMinMaxThumb([e[0], e[1]])
+  }
+
+  // Сделал динамическую фильтрацию массива объявлений, т.к. их у нас немного. Но в реальной ситуации я бы делал обновление через сабмит баттон на форме. В этом проекте хочу продемонстрировать навыки динамического стейт менеджмента.
+  const afterChange = (e) => {
+    dispatch({type: 'rangeMIN', payload: e[0]})
+    dispatch({type: 'rangeMAX', payload: e[1]})
   }
 
   return (
@@ -32,19 +31,21 @@ export default function MySlider_RangeCost() {
       <div className="filter__range">
         <label htmlFor="range">Цена, ₽</label>
         <div className='filter__tooltip-container'>
-          <div className='filter__tooltip'>от {numberFormat(minThumb)}</div>
-          <div className='filter__tooltip'>до {numberFormat(maxThumb)}</div>
+          <div className='filter__tooltip'>от {numberFormat(minMaxThumb[0])}</div>
+          <div className='filter__tooltip'>до {numberFormat(minMaxThumb[1])}</div>
         </div>
         <ReactSlider
-          onChange={sliderChange}
+          onChange={onChange}
+          onAfterChange={afterChange}
           className="filter__slider"
           thumbClassName="filter__slider__thumb"
           trackClassName="filter__slider__track"
           pearling
-          minDistance={max*0.0935}
-          value={[minThumb, maxThumb]}
-          min={rangeMIN}
-          max={rangeMAX}
+          minDistance={MAX*0.0935}
+          value={[minMaxThumb[0], minMaxThumb[1]]}
+          min={MIN}
+          max={MAX}
+          step={100}
         />
       </div>
     </>

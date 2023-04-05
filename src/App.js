@@ -16,10 +16,10 @@ export default function App() {
 
 const defaultState = {
   productType: 'Все',
-  min: 0,
-  max: 35000000,
-  rangeMIN: 0,
-  rangeMAX: 35000000,
+  MIN: 9000, // Для моделирования реальной ситуации поставлю 0 - 99999999999 и сделаю обновление через useTransition. Но позже. В первую очеред нужно доделать фильтрацию и модалку для показа объявления.
+  MAX: 30000000,
+  rangeMIN: 9000,
+  rangeMAX: 30000000,
 }
 
 const reducer = (state = defaultState, action) => {
@@ -32,22 +32,19 @@ const reducer = (state = defaultState, action) => {
       return {...state, productType: 'Фотоаппарат'}
     case 'Автомобиль':
       return {...state, productType: 'Автомобиль'}
+    case 'Все':
+      return {...state, productType: 'Все'}
     case 'MIN':
-      return {...state, min: action.payload}
+      return {...state, MIN: action.payload}
     case 'MAX':
-      return {...state, max: action.payload}
-      case 'rangeMIN':
-        return {...state, rangeMIN: action.payload}
-      case 'rangeMAX':
-        return {...state, rangeMAX: action.payload}
+      return {...state, MAX: action.payload}
+    case 'rangeMIN':
+      return {...state, rangeMIN: action.payload}
+    case 'rangeMAX':
+        return {...state, rangeMAX: action.payload}    
     default:
       return {
-        ...state,
-        productType: 'Все',
-        min: 0,
-        max: 35000000,
-        rangeMIN: 0,
-        rangeMAX: 35000000,
+        ...defaultState,
       }
   }
 }
