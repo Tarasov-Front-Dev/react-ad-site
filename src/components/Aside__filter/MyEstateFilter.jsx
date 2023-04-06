@@ -1,7 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MapMyInputs from "../UI/MapMyInputs";
+import { numberFormat } from "../Utilities/numberFormat";
 
 export default function MyEstateFilter() {
+  const squareSelector = useSelector(state => state.estate.square)
   const estateDispatch = useDispatch()
 
   return (
@@ -36,7 +38,11 @@ export default function MyEstateFilter() {
           name="square"
           defaultValue=""
           placeholder={0}
-          onChange={(e) => estateDispatch({type: "square", payload: e.target.value})}
+          value={squareSelector}
+          onChange={(e) => {
+            let num = numberFormat(e.target.value)
+            estateDispatch({type: "square", payload: num})
+          }}
         />
       </div>
     </div>

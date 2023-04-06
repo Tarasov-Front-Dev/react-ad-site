@@ -7,6 +7,7 @@ export default function MyAsideFilter() {
   const dispatch = useDispatch()
 
   const onChange = (e) => {
+    console.log(e.target.name, e.target.value)
     dispatch({type: e.target.name, payload: e.target.value})
   }
 

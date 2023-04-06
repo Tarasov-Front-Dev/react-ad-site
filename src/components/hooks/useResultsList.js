@@ -41,7 +41,8 @@ const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX) => {
 const useSortesResults = (arr, value) => {
   switch (value) {
     case 'popular': {
-      return arr.sort(() => Math.floor(Math.random() * 2 - 1).toString())
+      return arr.sort((a, b) => a.seller.rating - b.seller.rating)
+      // return arr.sort(() => Math.floor(Math.random() * 2 - 1).toString())
     }
     case 'cheap': {
       return arr.sort((a, b) => a.price - b.price)
@@ -58,13 +59,42 @@ const getEstateSorted = (arr, type, rooms, square) => {
       .reduce((acc, el) => acc = [...acc, ...resultArr
       .filter(i => i.filters.type === el)], [])
 
-    if (Number(rooms)) resultArr = resultArr.filter(i => i.filters['rooms-count'] === rooms)
+    if (Number(rooms) > 0) resultArr = resultArr.filter(i => i.filters['rooms-count'] === rooms)
 
-    if (square) resultArr = resultArr.filter(i => i.filters.area >= square)
+    if (Number(square) > 0) resultArr = resultArr.filter(i => i.filters.area >= square)
     
   return resultArr
 }
 
+
+const getLaptopSorted = (arr, laptopType, ram, diagonal, processor) => {
+    if (laptopType.length) arr = laptopType
+      .reduce((acc, el) => acc = [...acc, ...arr
+      .filter(i => i.filters.type === el)], [])
+
+    if (Number(ram) > 0) arr = arr.filter(i => i.filters['ram-value'] >= ram)
+
+    if (Number(diagonal) > 0) arr = arr.filter(i => i.filters['screen-size'] >= diagonal)
+
+    if (processor.length) arr = processor
+      .reduce((acc, el) => acc = [...acc, ...arr
+      .filter(i => i.filters['cpu-type'] === el)], [])
+    
+  return arr
+}
+
+
+const getCameraSorted = (arr, cameraType, matrixRes, supporting) => {
+  if (cameraType.length) arr = cameraType
+    .reduce((acc, el) => acc = [...acc, ...arr
+    .filter(i => i.filters.type === el)], [])
+
+  if (Number(matrixRes) > 0) arr = arr.filter(i => i.filters['matrix-resolution'] >= matrixRes)
+  
+  if (supporting !== 'any') arr = arr.filter(i => i.filters.supporting === supporting)
+  
+return arr
+}
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
 export const useResultsList = (
@@ -74,11 +104,26 @@ export const useResultsList = (
   {rangeMIN, rangeMAX},
   {sort},
   {type, rooms, square},
+  {laptopType, ram, diagonal, processor},
+  {cameraType, matrixRes, supporting},
   ) => {
   let typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
 
-  if (categories === 'Недвижимость') {
-    typeSortedResults = getEstateSorted(typeSortedResults, type, rooms, square)
+  switch (categories) {
+    case 'Недвижимость':
+      typeSortedResults = getEstateSorted(typeSortedResults, type, rooms, square)      
+      break;
+
+    case 'Ноутбук':
+      typeSortedResults = getLaptopSorted(typeSortedResults, laptopType, ram, diagonal, processor)
+      break;
+
+    case 'Фотоаппарат':
+      typeSortedResults = getCameraSorted(typeSortedResults, cameraType, matrixRes, supporting)
+      break;
+  
+    default:
+      break;
   }
 
   const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
@@ -86,14 +131,3 @@ export const useResultsList = (
 
   return minMaxSortedResuls
 }
-//   const typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
-//   const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
-//   useSortesResults(minMaxSortedResuls, sort)
-
-//   if (categories === 'Недвижимость') {
-//     const estateSorted = getEstateSorted(minMaxSortedResuls, type, rooms, square)
-//     return estateSorted
-//   }
-
-//   return minMaxSortedResuls
-// }

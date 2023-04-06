@@ -16,7 +16,6 @@ export const estateReducer = (state = defaultState, action) => {
       return {...state, type: [...state.type, action.payload]}
 
     case 'rooms':
-      console.log(action.payload)
       return {...state, rooms: +action.payload}
       
     case 'square':

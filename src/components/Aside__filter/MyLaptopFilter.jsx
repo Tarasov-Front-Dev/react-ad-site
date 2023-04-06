@@ -48,28 +48,28 @@ export default function MyLaptopFilter() {
 
 
 const laptopTypeFilter = [
-  {value: "ultra", id: "ultra", innerHTML: 'Ультрабук', type: 'checkbox', name: 'laptop-type'},
-  {value: "gaming", id: "gaming", innerHTML: 'Игровой ноутбук', type: 'checkbox', name: 'laptop-type'},
-  {value: "home", id: "home", innerHTML: 'Домашний ноутбук', type: 'checkbox', name: 'laptop-type'},
+  {value: "ultrabook", id: "ultra", innerHTML: 'Ультрабук', type: 'checkbox', name: 'laptopType'},
+  {value: "gaming", id: "gaming", innerHTML: 'Игровой ноутбук', type: 'checkbox', name: 'laptopType'},
+  {value: "home", id: "home", innerHTML: 'Домашний ноутбук', type: 'checkbox', name: 'laptopType'},
 ]
 
 const ramFilter = [
   {value: "any_ram", id: "any_ram", innerHTML: 'Любой', type: 'radio', name: 'ram'},
-  {value: "4gb", id: "4gb", innerHTML: '4 Гб', type: 'radio', name: 'ram'},
-  {value: "8gb", id: "8gb", innerHTML: '8 Гб', type: 'radio', name: 'ram'},
-  {value: "16gb", id: "16gb", innerHTML: '16 Гб', type: 'radio', name: 'ram'},
+  {value: 4, id: "4gb", innerHTML: '4 Гб', type: 'radio', name: 'ram'},
+  {value: 8, id: "8gb", innerHTML: '8 Гб', type: 'radio', name: 'ram'},
+  {value: 16, id: "16gb", innerHTML: '16 Гб', type: 'radio', name: 'ram'},
 ]
 
 const diagonalFilter = [
-  {value: "any_diagonal", id: "any_ram", innerHTML: 'Любая', type: 'radio', name: 'diagonal'},
-  {value: "13in", id: "13in", innerHTML: '13″', type: 'radio', name: 'diagonal'},
-  {value: "14in", id: "14in", innerHTML: '14″', type: 'radio', name: 'diagonal'},
-  {value: "15in", id: "15in", innerHTML: '15″', type: 'radio', name: 'diagonal'},
-  {value: "17in", id: "17in", innerHTML: '17″', type: 'radio', name: 'diagonal'},
+  {value: "any_diagonal", id: "any_diagonal", innerHTML: 'Любая', type: 'radio', name: 'diagonal'},
+  {value: 13, id: "13in", innerHTML: '13″', type: 'radio', name: 'diagonal'},
+  {value: 14, id: "14in", innerHTML: '14″', type: 'radio', name: 'diagonal'},
+  {value: 15, id: "15in", innerHTML: '15″', type: 'radio', name: 'diagonal'},
+  {value: 17, id: "17in", innerHTML: '17″', type: 'radio', name: 'diagonal'},
 ]
 
 const processorFilter = [
-  {value: "i3", id: "i3", innerHTML: 'Intel Core i3', type: 'checkbox', name: 'laptop-type'},
-  {value: "i5", id: "i5", innerHTML: 'Intel Core i5', type: 'checkbox', name: 'laptop-type'},
-  {value: "i7", id: "i7", innerHTML: 'Intel Core i7', type: 'checkbox', name: 'laptop-type'},
+  {value: "i3", id: "i3", innerHTML: 'Intel Core i3', type: 'checkbox', name: 'processor'},
+  {value: "i5", id: "i5", innerHTML: 'Intel Core i5', type: 'checkbox', name: 'processor'},
+  {value: "i7", id: "i7", innerHTML: 'Intel Core i7', type: 'checkbox', name: 'processor'},
 ]
