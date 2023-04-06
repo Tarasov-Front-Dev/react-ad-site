@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-ad-site/static/css/main.129ef893.css",
-    "main.js": "/react-ad-site/static/js/main.7d4ad055.js",
+    "main.js": "/react-ad-site/static/js/main.5765aa35.js",
     "static/media/Montserrat-Regular.woff": "/react-ad-site/static/media/Montserrat-Regular.6ae2be56f2279197e0cb.woff",
     "static/media/Montserrat-Medium.woff": "/react-ad-site/static/media/Montserrat-Medium.08fd1bdf818098e232e3.woff",
     "static/media/Montserrat-SemiBold.woff": "/react-ad-site/static/media/Montserrat-SemiBold.cf58fad672f705ae9c2d.woff",
@@ -15,10 +15,10 @@
     "static/media/icon-tick_disabled.svg": "/react-ad-site/static/media/icon-tick_disabled.d0d0a5ae64afaf6bae42.svg",
     "static/media/icon-tick.svg": "/react-ad-site/static/media/icon-tick.de26e26e8f6405729981.svg",
     "main.129ef893.css.map": "/react-ad-site/static/css/main.129ef893.css.map",
-    "main.7d4ad055.js.map": "/react-ad-site/static/js/main.7d4ad055.js.map"
+    "main.5765aa35.js.map": "/react-ad-site/static/js/main.5765aa35.js.map"
   },
   "entrypoints": [
     "static/css/main.129ef893.css",
-    "static/js/main.7d4ad055.js"
+    "static/js/main.5765aa35.js"
   ]
 }
