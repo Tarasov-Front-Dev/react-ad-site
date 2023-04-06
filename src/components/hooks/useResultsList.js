@@ -22,7 +22,7 @@ const useTypeSortedResults = (resultsList, categories, dispatch) => {
   return sortByType
 }
 
-const useMinMaxSorterResults = (resultsList, rangeMIN, rangeMAX) => {
+const useMinMaxSortedResults = (resultsList, rangeMIN, rangeMAX) => {
   const sortByMinMax = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чекбоксу
 
     // в случае непредвиденных значений вернуть массив без фильтрации. Можно выдавать ошибку и просить пользователя перезагрузить приложение
@@ -78,7 +78,7 @@ const getLaptopSorted = (arr, laptopType, ram, diagonal, processor) => {
 
     if (processor.length) arr = processor
       .reduce((acc, el) => acc = [...acc, ...arr
-      .filter(i => i.filters['cpu-type'] === el)], [])
+        .filter(i => i.filters['cpu-type'] === el)], [])
     
   return arr
 }
@@ -87,13 +87,36 @@ const getLaptopSorted = (arr, laptopType, ram, diagonal, processor) => {
 const getCameraSorted = (arr, cameraType, matrixRes, supporting) => {
   if (cameraType.length) arr = cameraType
     .reduce((acc, el) => acc = [...acc, ...arr
-    .filter(i => i.filters.type === el)], [])
+      .filter(i => i.filters.type === el)], [])
 
   if (Number(matrixRes) > 0) arr = arr.filter(i => i.filters['matrix-resolution'] >= matrixRes)
   
   if (supporting !== 'any') arr = arr.filter(i => i.filters.supporting === supporting)
   
-return arr
+  return arr
+}
+
+
+const getCarSorted = (arr, carType, carYear, transmission) => {
+  if (carType.length) arr = carType
+    .reduce((acc, el) => acc = [...acc, ...arr
+      .filter(i => i.filters['body-type'] === el)], [])
+
+  if (Number(carYear) > 0) arr = arr.filter(i => i.filters['production-year'] >= carYear)
+  
+  switch (transmission) {
+    case 'mechanic': {
+      arr = arr.filter(el => el.filters.transmission === 'mechanic')
+      break;
+    }
+    case 'auto': {
+      arr = arr.filter(el => el.filters.transmission === 'auto')
+      break;
+    }
+    default: break;
+  }
+  
+  return arr
 }
 
 // ОСНОВНАЯ ФУНКЦИЯ-СБОРЩИК
@@ -106,7 +129,9 @@ export const useResultsList = (
   {type, rooms, square},
   {laptopType, ram, diagonal, processor},
   {cameraType, matrixRes, supporting},
+  {carType, carYear, transmission}
   ) => {
+
   let typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
 
   switch (categories) {
@@ -121,12 +146,15 @@ export const useResultsList = (
     case 'Фотоаппарат':
       typeSortedResults = getCameraSorted(typeSortedResults, cameraType, matrixRes, supporting)
       break;
-  
-    default:
+
+    case 'Автомобиль':
+      typeSortedResults = getCarSorted(typeSortedResults, carType, carYear, transmission)
       break;
+  
+    default: break;
   }
 
-  const minMaxSortedResuls = useMinMaxSorterResults(typeSortedResults, rangeMIN, rangeMAX)
+  const minMaxSortedResuls = useMinMaxSortedResults(typeSortedResults, rangeMIN, rangeMAX)
   useSortesResults(minMaxSortedResuls, sort)
 
   return minMaxSortedResuls

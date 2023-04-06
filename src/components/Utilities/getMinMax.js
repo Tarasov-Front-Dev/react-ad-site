@@ -25,5 +25,8 @@ export const getMinMax = (arr, dispatch) => {
   dispatch({type: 'camera-type', payload: ''})
   dispatch({type: 'resolution-matrix', payload: 'any'})
   dispatch({type: 'resolution-video', payload: 'any'})
+  dispatch({type: 'car-body', payload: ''})
+  dispatch({type: 'car_year', payload: 2008})
+  dispatch({type: 'transmission', payload: ''})
 
 }

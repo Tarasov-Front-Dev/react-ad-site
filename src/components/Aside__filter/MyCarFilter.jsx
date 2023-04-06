@@ -17,6 +17,7 @@ export default function MyCarFilter() {
         className={'filter__select-wrapper'}
         labelName={'Минимальный год выпуска'}
         id={'car_year'}
+        name={'car_year'}
         oprtionArr={carYearFilter}
       />
       <fieldset className="filter__radiobuttons filter__radiobuttons--transmission">
@@ -34,23 +35,22 @@ export default function MyCarFilter() {
 
 
 const carYearFilter = [
-  {value: "1900", innerHTML: '1900', isDefaultValue: true},
-  {value: "1940", innerHTML: '1940', isDefaultValue: false},
-  {value: "1960", innerHTML: '1960', isDefaultValue: false},
-  {value: "1980", innerHTML: '1980', isDefaultValue: false},
-  {value: "2000", innerHTML: '2000', isDefaultValue: false},
+  {value: 2008, innerHTML: '2008', isDefaultValue: true},
+  {value: 2017, innerHTML: '2017', isDefaultValue: false},
+  {value: 2018, innerHTML: '2018', isDefaultValue: false},
+  {value: 2019, innerHTML: '2019', isDefaultValue: false},
 ]
 
 const transmissionFilter = [
   {value: "any_transmission", id: "any_transmission", innerHTML: 'Любая', type: 'radio', name: 'transmission'},
-  {value: "mechanic_transmission", id: "mechanic_transmission", innerHTML: 'Механика', type: 'radio', name: 'transmission'},
-  {value: "auto_transmission", id: "auto_transmission", innerHTML: 'Автомат', type: 'radio', name: 'transmission'},
+  {value: "mechanic", id: "mechanic_transmission", innerHTML: 'Механика', type: 'radio', name: 'transmission'},
+  {value: "auto", id: "auto_transmission", innerHTML: 'Автомат', type: 'radio', name: 'transmission'},
 ]
 
 const carBodyFilter = [
   {value: "sedan", id: "sedan", innerHTML: 'Седан', type: 'checkbox', name: 'car-body'},
   {value: "universal", id: "universal", innerHTML: 'Универсал', type: 'checkbox', name: 'car-body'},
   {value: "hatchback", id: "hatchback", innerHTML: 'Хэтчбэк', type: 'checkbox', name: 'car-body'},
-  {value: "jeep", id: "jeep", innerHTML: 'Внедорожник', type: 'checkbox', name: 'car-body'},
+  {value: "suv", id: "suv", innerHTML: 'Внедорожник', type: 'checkbox', name: 'car-body'},
   {value: "cupe", id: "cupe", innerHTML: 'Купэ', type: 'checkbox', name: 'car-body'},
 ]
