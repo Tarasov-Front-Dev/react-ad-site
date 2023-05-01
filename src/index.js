@@ -5,7 +5,7 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <StrictMode> // Выключено т.к. devtools дублируют логи. По готовности проекта включить обратно
+  <StrictMode>
     <App />
-  // </StrictMode>
+  </StrictMode>
 );

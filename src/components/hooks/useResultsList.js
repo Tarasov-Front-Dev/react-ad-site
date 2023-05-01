@@ -1,120 +1,117 @@
 import { useMemo } from "react";
 import { getMinMax } from "../Utilities/getMinMax";
 
-const useTypeSortedResults = (resultsList, categories, dispatch) => {
-  const sortByType = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чиху
-    if (!resultsList.length) return [] // При первичном рендере (до момента получения массива объявлений от ДБ) возвращает пустой массив объявлений
+const useCategoryFilteredResults  = (resultsList, categories, dispatch) => {
+  const sortByType = useMemo(() => {
+    if (!resultsList) return []
+    const filtered = resultsList.filter(el => categories === 'Все' || categories === el.category)
+    getMinMax(filtered, dispatch)
 
-    if (categories === 'Все') { // Если показывается весь массив объявлений (дефолтное состояние), то развернуть дефолтный массив в новый и вернуть его. Задать мин/макс значения слайдера и его ползунков
-      getMinMax(resultsList, dispatch)
-      return [...resultsList] // Разорачиваем массив чтобы получить немемоизированное значение от функции useMinMaxSorterResults
-    }
-
-    // Отфильтровать массив объявлений по типу, задать мин/макс слайдера и его ползунков
-    const filteredResultsList = [...resultsList
-      .filter(el => categories === el.category)]
-
-    getMinMax(filteredResultsList, dispatch)
-    return filteredResultsList
-
+    return filtered
   }, [resultsList, categories])
 
   return sortByType
 }
 
 const useMinMaxSortedResults = (resultsList, rangeMIN, rangeMAX) => {
-  const sortByMinMax = useMemo(() => { // Мемоизируемся, чтобы не фильтроваться по каждому чекбоксу
+  const filterByMinMax = useMemo(() => {
+    if (rangeMIN < 0 || rangeMAX < 0 || Number.isNaN(+rangeMIN) || Number.isNaN(+rangeMAX)) return []
 
-    // в случае непредвиденных значений вернуть массив без фильтрации. Можно выдавать ошибку и просить пользователя перезагрузить приложение
-    if (rangeMIN < 0 || rangeMAX < 0 || Number.isNaN(+rangeMIN) || Number.isNaN(+rangeMAX)) return
-
-    // отфильтровать массив объявления по предельным значениям стоимости
-    const filteredResultsList = [...resultsList
-      .filter(el => el.price >= rangeMIN && el.price <= rangeMAX)]
+    const filteredResultsList = resultsList
+      .filter(({ price }) => price >= rangeMIN && price <= rangeMAX)
     
     return filteredResultsList
   }, [resultsList, rangeMIN, rangeMAX])
 
-  return sortByMinMax
+  return filterByMinMax
 }
 
-const useSortesResults = (arr, value) => {
-  switch (value) {
-    case 'popular': {
-      return arr.sort((a, b) => a.seller.rating - b.seller.rating)
-      // return arr.sort(() => Math.floor(Math.random() * 2 - 1).toString())
-    }
-    case 'cheap': {
-      return arr.sort((a, b) => a.price - b.price)
-    }
-    case 'new': {
-      return arr.sort((a, b) => b['publish-date'] - a['publish-date'])
-    }
+const getEstateSorted = (arr, {type, rooms, square}) => {
+  let resultArr = arr;
+  
+  if (type.length) {
+    resultArr = type.flatMap(el => resultArr.filter(i => i.filters.type === el));
   }
+  
+  if (Number(rooms) > 0) {
+    resultArr = resultArr.filter(i => i.filters['rooms-count'] === Number(rooms));
+  }
+
+  if (Number(square) > 0) {
+    resultArr = resultArr.filter(i => i.filters.area >= Number(square));
+  }
+  
+  return resultArr;
 }
 
-const getEstateSorted = (arr, type, rooms, square) => {
-  let resultArr = arr
-    if (type.length) resultArr = type
-      .reduce((acc, el) => acc = [...acc, ...resultArr
-      .filter(i => i.filters.type === el)], [])
+const getLaptopSorted = (arr, {laptopType, ram, diagonal, processor}) => {
+    if (laptopType.length) {
+      arr = laptopType
+      .reduce((acc, el) => [
+        ...acc, 
+        ...arr.filter(i => i.filters.type === el),
+      ], [])
+    }
 
-    if (Number(rooms) > 0) resultArr = resultArr.filter(i => i.filters['rooms-count'] === rooms)
+    if (Number(ram) > 0) {
+      arr = arr.filter(i => i.filters['ram-value'] >= ram)
+    }
 
-    if (Number(square) > 0) resultArr = resultArr.filter(i => i.filters.area >= square)
-    
-  return resultArr
-}
+    if (Number(diagonal) > 0) {
+      arr = arr.filter(i => i.filters['screen-size'] >= diagonal)
+    }
 
-
-const getLaptopSorted = (arr, laptopType, ram, diagonal, processor) => {
-    if (laptopType.length) arr = laptopType
-      .reduce((acc, el) => acc = [...acc, ...arr
-      .filter(i => i.filters.type === el)], [])
-
-    if (Number(ram) > 0) arr = arr.filter(i => i.filters['ram-value'] >= ram)
-
-    if (Number(diagonal) > 0) arr = arr.filter(i => i.filters['screen-size'] >= diagonal)
-
-    if (processor.length) arr = processor
-      .reduce((acc, el) => acc = [...acc, ...arr
-        .filter(i => i.filters['cpu-type'] === el)], [])
+    if (processor.length) {
+      arr = processor
+      .reduce((acc, el) => [
+        ...acc, 
+        ...arr.filter(i => i.filters['cpu-type'] === el),
+      ], [])
+    }
     
   return arr
 }
 
 
-const getCameraSorted = (arr, cameraType, matrixRes, supporting) => {
-  if (cameraType.length) arr = cameraType
-    .reduce((acc, el) => acc = [...acc, ...arr
-      .filter(i => i.filters.type === el)], [])
+const getCameraSorted = (arr, {cameraType, matrixRes, supporting}) => {
+  if (cameraType.length) {
+    arr = cameraType.reduce((acc, el) => [
+      ...acc, 
+      ...arr.filter(i => i.filters.type === el)
+    ], [])
+    }
 
-  if (Number(matrixRes) > 0) arr = arr.filter(i => i.filters['matrix-resolution'] >= matrixRes)
+  if (Number(matrixRes) > 0) {
+    arr = arr.filter(i => i.filters['matrix-resolution'] >= matrixRes)
+  }
   
-  if (supporting !== 'any') arr = arr.filter(i => i.filters.supporting === supporting)
+  if (supporting !== 'any') {
+    arr = arr.filter(i => i.filters.supporting === supporting)
+  }
   
   return arr
 }
 
-
-const getCarSorted = (arr, carType, carYear, transmission) => {
-  if (carType.length) arr = carType
-    .reduce((acc, el) => acc = [...acc, ...arr
-      .filter(i => i.filters['body-type'] === el)], [])
-
-  if (Number(carYear) > 0) arr = arr.filter(i => i.filters['production-year'] >= carYear)
-  
-  switch (transmission) {
-    case 'mechanic': {
-      arr = arr.filter(el => el.filters.transmission === 'mechanic')
-      break;
-    }
-    case 'auto': {
-      arr = arr.filter(el => el.filters.transmission === 'auto')
-      break;
-    }
-    default: break;
+const getCarSorted = (arr, {carType, carYear, transmission}) => {
+  if (carType.length) {
+    arr = carType.reduce((acc, el) => [
+      ...acc, 
+      ...arr.filter(i => i.filters['body-type'] === el)
+    ], [])
   }
+
+  if (Number(carYear) > 0) {
+    arr = arr.filter(i => i.filters['production-year'] >= carYear)
+  }
+
+  const transmissionFilters = {
+    mechanic: el => el.filters.transmission === 'mechanic',
+    auto: el => el.filters.transmission === 'auto',
+  }
+
+  arr = transmissionFilters[transmission]
+    ? arr.filter(transmissionFilters[transmission])
+    : arr
   
   return arr
 }
@@ -126,36 +123,30 @@ export const useResultsList = (
   {categories}, 
   {rangeMIN, rangeMAX},
   {sort},
-  {type, rooms, square},
-  {laptopType, ram, diagonal, processor},
-  {cameraType, matrixRes, supporting},
-  {carType, carYear, transmission}
+  productDetails = {},
   ) => {
 
-  let typeSortedResults = useTypeSortedResults(resultsList, categories, dispatch)
+  let typeSortedResults = useCategoryFilteredResults(resultsList, categories, dispatch)
 
-  switch (categories) {
-    case 'Недвижимость':
-      typeSortedResults = getEstateSorted(typeSortedResults, type, rooms, square)      
-      break;
-
-    case 'Ноутбук':
-      typeSortedResults = getLaptopSorted(typeSortedResults, laptopType, ram, diagonal, processor)
-      break;
-
-    case 'Фотоаппарат':
-      typeSortedResults = getCameraSorted(typeSortedResults, cameraType, matrixRes, supporting)
-      break;
-
-    case 'Автомобиль':
-      typeSortedResults = getCarSorted(typeSortedResults, carType, carYear, transmission)
-      break;
-  
-    default: break;
+  const sortFunctions = {
+    'Недвижимость': getEstateSorted,
+    'Ноутбук': getLaptopSorted,
+    'Фотоаппарат': getCameraSorted,
+    'Автомобиль': getCarSorted,
   }
 
-  const minMaxSortedResuls = useMinMaxSortedResults(typeSortedResults, rangeMIN, rangeMAX)
-  useSortesResults(minMaxSortedResuls, sort)
+  const sortHandlers = {
+    'popular': (arr) => arr.sort((a, b) => a.seller.rating - b.seller.rating),
+    'cheap': (arr) => arr.sort((a, b) => a.price - b.price),
+    'new': (arr) => arr.sort((a, b) => b['publish-date'] - a['publish-date']),
+  };
+
+  if (categories in sortFunctions) {
+    typeSortedResults = sortFunctions[categories](typeSortedResults, productDetails)
+  }
+
+  let minMaxSortedResuls = useMinMaxSortedResults(typeSortedResults, rangeMIN, rangeMAX)
+  if (sort) sortHandlers[sort](minMaxSortedResuls)
 
   return minMaxSortedResuls
 }

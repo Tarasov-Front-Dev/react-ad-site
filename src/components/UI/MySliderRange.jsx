@@ -42,9 +42,9 @@ export default function MySliderRange() {
           trackClassName="filter__slider__track"
           pearling
           minDistance={MAX*0.0935}
-          value={[minMaxThumb[0], minMaxThumb[1]]}
-          min={MIN}
-          max={MAX}
+          value={[minMaxThumb[0] ? minMaxThumb[0] : 0, minMaxThumb[1] ? minMaxThumb[1] : 0]}
+          min={MIN ? MIN : 0}
+          max={MAX ? MAX : 0}
           step={100}
         />
       </div>

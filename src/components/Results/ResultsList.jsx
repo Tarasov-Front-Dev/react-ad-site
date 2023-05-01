@@ -4,12 +4,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { useResultsList } from "../hooks/useResultsList";
 import axios from "axios";
 
+
 export default function ResultsList() {
   const dispatch = useDispatch()
-  const state = useSelector(state => state) // Селектор изначально было положен здесь и пока  лежит для ререндеринга листа объяв по изменению стейта. После завершения MVP надо перенести вызов стейта в хук useResultList, а оттуда диспатчить отфильтрованный список обяъвлений.
-  console.log(state.car)
-
-  const [resultsList, setResultsList] = useState([]) // Стейтим полученный от ДБ массив объявлений. Потом будем по нему фильтроваться. В реальной ситуации неплохо бы получать от бэка готовый массив объявления по массиву значений (особенно удачно если запрос будем посылать по сабмиту формы с фильтрами) или хотя бы статичный крупно фильтрованный для последющей мелкой фильтрации на фронте.
+  const state = useSelector(state => state)
+  const category = {
+    'Недвижимость': state.estate,
+    'Ноутбук': state.laptop,
+    'Фотоаппарат': state.camera,
+    'Автомобиль': state.car,
+  }
+  const [resultsList, setResultsList] = useState([])
 
   const filteredResultsList = useResultsList(  // Здесь мы собираем наш массив объявлений
     dispatch,
@@ -17,10 +22,7 @@ export default function ResultsList() {
     state.type, 
     state.minMax, 
     state.sort,
-    state.estate,
-    state.laptop,
-    state.camera,
-    state.car,
+    category[state.type.categories],
     )
 
   async function getItemList() {
